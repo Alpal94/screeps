@@ -19,7 +19,17 @@ module.exports = {
 				}
 				else { /*console.log("FILLING UP");*/ }
 			} else {
-				roleUpgrader.run(creep);
+				var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+					filter: (s) => s.energy < s.energyCapacity && s.structureType === STRUCTURE_CONTAINER
+				});
+				if (structure != undefined) {
+					if(creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+						creep.moveTo(structure);
+					}
+					else { /*console.log("FILLING UP");*/ }
+				}
+				//console.log("DOING NOTHING");
+				//roleUpgrader.run(creep);
 			}
 		}
 		else {

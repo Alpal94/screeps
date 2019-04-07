@@ -3,7 +3,7 @@ var roleUpgrader = require('role.upgrader');
 module.exports = {
 	run: function (creep) {
 		if(creep.memory.sId == 1) {
-			var targetRoom = 'E31N39';
+			var targetRoom = 'E48S6';
 			if (creep.room.name != targetRoom) {
 			    // find exit to target room
 			    var exit = creep.room.findExitTo(targetRoom);
@@ -19,6 +19,7 @@ module.exports = {
 			creep.memory.working = true;
 
 		}	
+		console.log(creep.pos);
 
 		if(creep.memory.working == true) {
 			var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
