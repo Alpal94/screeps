@@ -2,32 +2,157 @@ module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
 	var homeRoom = 'E48S7';
-	var targetRoom = 'E46S7';
+	var targetRoom = 'E49S9';
+	var targetRoom2 = 'E44S8';
 
-	console.log(creep.pos + "ATTACKER");
-	const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-	if(target) {
-		console.log("KILL KILL KILL");
-		if(creep.attack(target) == ERR_NOT_IN_RANGE) {
-			creep.moveTo(target);
-		}
-	} else {
-		// if in target room
-		if (creep.room.name != targetRoom) {
-			if(creep.pos.x > 1 && creep.room.name == homeRoom) {
-				var pos = new RoomPosition(1, 34, homeRoom); 
-				creep.moveTo(pos);
-				return;
+
+	console.log(creep.pos + " BRUTE");
+
+	switch(creep.memory.type) {
+		case 'healer':
+			const target = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
+				filter: function(object) {
+					return object.hits < object.hitsMax || object.memory.type == 'brute';
+				}
+			});
+			console.log(target + " HEALER");
+			if(target) {
+				creep.heal(target);
+				creep.moveTo(target);
+			} else {
+				// if in target room
+				if (creep.room.name != targetRoom) {
+					if(creep.pos.x > 1 && creep.room.name == homeRoom) {
+						var pos = new RoomPosition(1, 34, homeRoom); 
+						creep.moveTo(pos);
+						return;
+					}
+				    // find exit to target room
+				    var exit = creep.room.findExitTo(targetRoom);
+				    // move to exit
+				    creep.moveTo(creep.pos.findClosestByRange(exit));
+				}
+				else {
+					var pos = new RoomPosition(3, 15, targetRoom); 
+					creep.moveTo(pos);
+				}
 			}
-		    // find exit to target room
-		    var exit = creep.room.findExitTo(targetRoom);
-		    // move to exit
-		    creep.moveTo(creep.pos.findClosestByRange(exit));
+
+		break;
+			case 'brute2':
+		console.log("BRUTE @2 ALIVE  " + creep.pos);
+				executeKillEverything(homeRoom, targetRoom2, creep);
+				break;
+			case 'brute':
+			default:
+				executeKillEverything2(homeRoom, targetRoom, creep);
+				break;
 		}
-		else {
-			var pos = new RoomPosition(3, 37, 'E48S7'); 
-			creep.moveTo(pos);
+
+
+
+
+	    }
+
+
+		 
+	};
+
+
+	    function executeBrute(homeRoom, targetRoom, creep)  {
+		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+		console.log(target);
+		if(target) {
+			console.log(creep.attack(target));
+			if(creep.attack(target) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(target);
+			}
+		} else {
+			// if in target room
+			if (creep.room.name != targetRoom) {
+				if(creep.pos.x > 1 && creep.room.name == homeRoom) {
+					var pos = new RoomPosition(1, 34, homeRoom); 
+					creep.moveTo(pos);
+					return;
+				}
+			    // find exit to target room
+			    var exit = creep.room.findExitTo(targetRoom);
+			    // move to exit
+			    creep.moveTo(creep.pos.findClosestByRange(exit));
+			}
+			else {
+				console.log("WHATS WRONG");
+				var pos = new RoomPosition(30, 30, targetRoom); 
+				creep.moveTo(pos);
+			}
 		}
-	}
     }
-};
+
+	    function executeKillEverything(homeRoom, targetRoom, creep)  {
+		if(creep.room.name === 'E46S7' &&  targetRoom !== 'E46S7') {
+			targetRoom = 'E46S8';
+		}
+		if(creep.room.name === 'E45S7' &&  targetRoom !== 'E45S7') {
+			targetRoom = 'E45S8';
+		}
+		if(creep.room.name === 'E45S8' &&  targetRoom !== 'E45S8') {
+			targetRoom = 'E44S8';
+		}
+		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+		if(target) {
+			if(creep.attack(target) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(target);
+			}
+		} else {
+			// if in target room
+			if (creep.room.name != targetRoom) {
+				if(creep.pos.x > 1 && creep.room.name == homeRoom) {
+					var pos = new RoomPosition(1, 34, homeRoom); 
+					creep.moveTo(pos);
+					return;
+				}
+			    // find exit to target room
+			    var exit = creep.room.findExitTo(targetRoom);
+			    // move to exit
+			    creep.moveTo(creep.pos.findClosestByRange(exit));
+			}
+			else {
+				if(creep.memory.type === 'brute') {
+					var pos = new RoomPosition(2, 18, targetRoom); 
+					creep.moveTo(pos);
+				} else {
+					var pos = new RoomPosition(34, 8, targetRoom); 
+					creep.moveTo(pos);
+				}
+			}
+		}
+    }
+	    function executeKillEverything2(homeRoom, targetRoom, creep)  {
+		    console.log("LOOTER DESTROYER + " + creep.pos + " " + targetRoom);
+		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+		if(target) {
+			if(creep.attack(target) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(target);
+			}
+		} else {
+			// if in target room
+			if (creep.room.name == 'E48S8' || creep.room.name == 'E47S8') {
+				var pos = new RoomPosition(31, 10, 'E48S9'); 
+				creep.moveTo(pos);
+			} else if (creep.room.name == 'E48S9' && creep.pos.y < 20) {
+				var pos = new RoomPosition(31, 25, 'E48S9'); 
+				creep.moveTo(pos);
+			} else  if (creep.room.name != targetRoom) {
+				var pos = new RoomPosition(31, 2, targetRoom); 
+				creep.moveTo(pos);
+			} else {
+				if(creep.memory.type === 'brute') {
+					var pos = new RoomPosition(22, 18, targetRoom); 
+					creep.moveTo(pos);
+				} else {
+					var pos = new RoomPosition(31, 2, targetRoom); 
+					creep.moveTo(pos);
+				}
+			}
+		}
+    }

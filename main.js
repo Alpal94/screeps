@@ -42,7 +42,13 @@ function mainFunction(TheTerminator, home, newBase) {
 	var numberOfRemoteBuilders1 = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.sId == '1');
 	var numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
 	var numberOfClaimers1 = _.sum(Game.creeps, (c) => c.memory.role == 'claimer');
-	var numberOfAttackers = _.sum(Game.creeps, (c) => c.memory.role == 'attacker' && c.memory.home == home);
+
+	var numberOfAttackers = _.sum(Game.creeps, (c) => c.memory.role == 'attacker' && c.memory.home == home && c.memory.type == 'brute');
+	var numberOfAttackers2 = _.sum(Game.creeps, (c) => c.memory.role == 'attacker' && c.memory.home == home && c.memory.type == 'brute2');
+	var numberOfHealers = _.sum(Game.creeps, (c) => c.memory.role == 'attacker' && c.memory.home == home && c.memory.type == 'healer');
+	var numberOfLongRange = _.sum(Game.creeps, (c) => c.memory.role == 'attacker' && c.memory.home == home && c.memory.type == 'long_range');
+
+
 	var numberOfWallRepairers =  _.sum(Game.creeps, (c) => c.memory.role == 'wall_repairer');
 	var numberOfMiners =  _.sum(Game.creeps, (c) => c.memory.role == 'miner' && c.memory.sId == '0');
 	var numberOfMiners2 =  _.sum(Game.creeps, (c) => c.memory.role == 'miner2' && c.memory.sId == '0');
@@ -151,7 +157,7 @@ function mainFunction(TheTerminator, home, newBase) {
 		if(numberOfMiners < 2) name = TheTerminator.createCustomCreep(energy,  'miner', 0, home);
 		else if(numberOfMiners2 < 2) name = TheTerminator.createCustomCreep(energy,  'miner2', 0, home);
 	}
-	console.log("NUMBER OF ATACKERS: " + numberOfAttackers);
+	console.log("NUMBER OF ATACKERS: " + numberOfAttackers2);
 	if(numberOfHarvesters < 5) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
 	else if(numberOfBuilders < 3) name = TheTerminator.createCustomCreep(energy,  'builder', 0, home);
 	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home);
@@ -161,7 +167,13 @@ function mainFunction(TheTerminator, home, newBase) {
 	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home);
 	else if(numberOfLongDistanceHarvesters3 < 3) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 3, home);
 	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 4, home);
-	else if(numberOfAttackers  < 1) { console.log("HERE ATTACK"); name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute', home); }
+
+	else if(numberOfAttackers  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute', home); }
+	//else if(numberOfAttackers2  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute2', home); }
+
+	//else if(numberOfHealers  < 4) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'healer', home); }
+	//else if(numberOfLongRange  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'long_range', home); }
+
 	else if(numberOfUpgraders < 5) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);
 	/*else if(numberOfWallRepairers < 0) name = TheTerminator.createCustomCreep(energy,  'wall_repairer', 0);
 	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0);

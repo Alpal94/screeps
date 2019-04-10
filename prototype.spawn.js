@@ -19,7 +19,6 @@ module.exports = function() {
 					body.push(MOVE);
 					body.push(MOVE);
 					body.push(MOVE);
-					body.push(MOVE);
 					body.push(CLAIM);
 					break;
 				break;
@@ -89,14 +88,29 @@ module.exports = function() {
 		function(energy, roleName, id, type, home) {
 			console.log("GENERATE ATTACK");
 			switch(type) {
+				case 'healer':
+					console.log("CREATED HEAL");
+					var numberOfHeal = 5;
+					var energyMove = 50;
+					var energyHeal = 250;
+					var numberOfMove = Math.floor( (energy - numberOfHeal*energyHeal) / energyMove );
+					var body = [];
+					for (let i = 0; i < numberOfHeal - 1; i++) {
+						body.push(HEAL);
+					}
+					for (let i = 0; i < numberOfMove; i++) {
+						body.push(MOVE);
+					}
+					break;
 				case 'brute':
 				default:
-					var numberOfAttack = 5;
-					var numberOfMove = 25;
+					console.log("CREATED BRUTE + " + type + " + " + energy);
+					var numberOfAttack = 10;
+					var numberOfMove = 20;
 
 					var energyMove = 50;
 					var energyAttack = 80;
-					var numberOfTough = Math.floor( (energy - numberOfAttack*energyAttack - numberOfMove*energyMove) / 10 );
+					var numberOfTough = 0; //Math.floor( (energy - numberOfAttack*energyAttack - numberOfMove*energyMove) / 10 );
 					var body = [];
 					for (let i = 0; i < numberOfTough - 1; i++) {
 						body.push(TOUGH);
@@ -107,10 +121,9 @@ module.exports = function() {
 					for (let i = 0; i < numberOfAttack; i++) {
 						body.push(ATTACK);
 					}
-					console.log("WHATS WRONG ATTACK: " + (numberOfTough));
 					break;
 			}
-			return console.log(this.createCreep(body, undefined, { role: roleName, working: false , sId: id , type: type, home: home}));
+			return this.createCreep(body, undefined, { role: roleName, working: false , sId: id , type: type, home: home});
 		};
 
 };

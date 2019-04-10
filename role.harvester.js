@@ -1,6 +1,7 @@
 var roleUpgrader = require('role.upgrader');
 module.exports = {
 	run: function (creep) {
+		let exploitStorage = false;
 		if(creep.memory.working == true && creep.carry.energy == 0) {
 		       creep.memory.working = false;
 		}
@@ -36,6 +37,7 @@ module.exports = {
 		        filter: (structure) =>
 			        (structure.structureType === STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 0) 
 				|| (structure.structureType === STRUCTURE_LINK && structure.energy > 0) 
+				|| (structure.structureType === STRUCTURE_STORAGE && exploitStorage)
 			});
 			var source = creep.pos.findClosestByPath(containers);
 			if(creep.withdraw(source, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
