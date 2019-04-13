@@ -2,7 +2,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
 	var homeRoom = 'E48S7';
-	var targetRoom = 'E49S9';
+	var targetRoom = 'E48S2';
 	var targetRoom2 = 'E44S8';
 
 
@@ -99,34 +99,51 @@ module.exports = {
 			targetRoom = 'E44S8';
 		}
 		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-		if(target) {
-			if(creep.attack(target) == ERR_NOT_IN_RANGE) {
-				creep.moveTo(target);
-			}
-		} else {
-			// if in target room
-			if (creep.room.name != targetRoom) {
-				if(creep.pos.x > 1 && creep.room.name == homeRoom) {
-					var pos = new RoomPosition(1, 34, homeRoom); 
-					creep.moveTo(pos);
-					return;
+		if(navigateRoomE44S8(creep)) {
+			if(target && creep.room.name == targetRoom) {
+				if(creep.attack(target) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(target);
 				}
-			    // find exit to target room
-			    var exit = creep.room.findExitTo(targetRoom);
-			    // move to exit
-			    creep.moveTo(creep.pos.findClosestByRange(exit));
-			}
-			else {
-				if(creep.memory.type === 'brute') {
-					var pos = new RoomPosition(2, 18, targetRoom); 
+			} else {
+				// if in target room
+				if (creep.room.name != targetRoom) {
+					if(creep.pos.x > 1 && creep.room.name == homeRoom) {
+						var pos = new RoomPosition(1, 34, homeRoom); 
+						creep.moveTo(pos);
+						return;
+					}
+					var pos = new RoomPosition(39, 5, targetRoom); 
 					creep.moveTo(pos);
-				} else {
-					var pos = new RoomPosition(34, 8, targetRoom); 
-					creep.moveTo(pos);
+				}
+				else {
+					if(creep.memory.type === 'brute') {
+						var pos = new RoomPosition(2, 14, targetRoom); 
+						creep.moveTo(pos);
+					} else {
+						var pos = new RoomPosition(2, 14, targetRoom); 
+						creep.moveTo(pos);
+					}
 				}
 			}
 		}
     }
+
+	function navigateRoomE44S8(creep) {
+		var room = 'E44S8';
+		if(creep.room.name !== room) return true;
+		
+		if(creep.pos.x > 25 && creep.pos.y < 45) {
+			var pos = new RoomPosition(24, 46, room); 
+			creep.moveTo(pos);
+			return false;
+		} else if(creep.pos.y > 44) {
+			var pos = new RoomPosition(9, 40, room); 
+			creep.moveTo(pos);
+			return false;
+		} else { 
+			return true;
+		}
+	}
 	    function executeKillEverything2(homeRoom, targetRoom, creep)  {
 		    console.log("LOOTER DESTROYER + " + creep.pos + " " + targetRoom);
 		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);

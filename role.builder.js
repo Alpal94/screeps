@@ -30,7 +30,11 @@ module.exports = {
 				} else {
 				}
 			} else {
-				roleHarvester.run(creep);					
+				if (creep.memory.sId == 1) {
+					roleHarvester.run(creep);					
+				} else {
+					roleUpgrader.run(creep);					
+				}
 			}
 		}
 		else {
@@ -40,7 +44,8 @@ module.exports = {
 			}*/
 		     	var containers = creep.room.find(FIND_STRUCTURES, {
 		        filter: (structure) =>
-			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 0)
+			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 0) ||
+			        (structure.structureType == STRUCTURE_STORAGE)
 			});
 			var source = creep.pos.findClosestByPath(containers);
 			if(creep.withdraw(source, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

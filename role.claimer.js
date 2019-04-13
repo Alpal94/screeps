@@ -27,7 +27,9 @@ module.exports = {
             if (creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 // move towards the controller
                 creep.moveTo(creep.room.controller);
-            }
+            } else {
+		    creep.moveTo(creep.room.controller);
+	    }
 	    //creep.signController(creep.room.controller, "All enemies of the Empire, die !!!");
         }
     }

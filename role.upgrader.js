@@ -21,7 +21,7 @@ module.exports = {
 		else {
 		     	var containers = creep.room.find(FIND_STRUCTURES, {
 		        filter: (structure) =>
-			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 0) ||
+			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 20) ||
 			        (structure.structureType == STRUCTURE_STORAGE) 
 			});
 			var source = creep.pos.findClosestByPath(containers);
