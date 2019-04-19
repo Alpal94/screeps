@@ -3,7 +3,8 @@ module.exports = {
     run: function(creep) {
 	var homeRoom = 'E48S7';
 	var targetRoom = 'E48S2';
-	var targetRoom2 = 'E44S8';
+	//var targetRoom2 = 'E44S8';
+	var targetRoom2 = 'E47S7';
 
 
 	console.log(creep.pos + " BRUTE");
@@ -92,17 +93,21 @@ module.exports = {
 		if(creep.room.name === 'E46S7' &&  targetRoom !== 'E46S7') {
 			targetRoom = 'E46S8';
 		}
-		if(creep.room.name === 'E45S7' &&  targetRoom !== 'E45S7') {
+		/*if(creep.room.name === 'E45S7' &&  targetRoom !== 'E45S7') {
 			targetRoom = 'E45S8';
-		}
+		}*/
 		if(creep.room.name === 'E45S8' &&  targetRoom !== 'E45S8') {
 			targetRoom = 'E44S8';
 		}
 		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 		if(navigateRoomE44S8(creep)) {
-			if(target && creep.room.name == targetRoom) {
+			if(target) {
 				if(creep.attack(target) == ERR_NOT_IN_RANGE) {
-					creep.moveTo(target);
+					if(target.room.name === targetRoom) creep.moveTo(target);
+					else {
+						var pos = new RoomPosition(2, 14, targetRoom); 
+						creep.moveTo(pos);
+					}
 				}
 			} else {
 				// if in target room
@@ -112,7 +117,7 @@ module.exports = {
 						creep.moveTo(pos);
 						return;
 					}
-					var pos = new RoomPosition(39, 5, targetRoom); 
+					var pos = new RoomPosition(40, 4, targetRoom); 
 					creep.moveTo(pos);
 				}
 				else {
@@ -130,9 +135,11 @@ module.exports = {
 
 	function navigateRoomE44S8(creep) {
 		var room = 'E44S8';
-		if(creep.room.name !== room) return true;
-		
+		if(creep.room.name !== room) { console.log("WHAT THE HELL"); return true; }
+		console.log("OK ATTACkEr");	
+
 		if(creep.pos.x > 25 && creep.pos.y < 45) {
+			console.log("ATTACK CREEP HERE");
 			var pos = new RoomPosition(24, 46, room); 
 			creep.moveTo(pos);
 			return false;

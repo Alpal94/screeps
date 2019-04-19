@@ -10,6 +10,7 @@ var roleLongDistanceHarvester = require('role.longDistanceHarvester');
 var roleLongUpgrader = require('role.longUpgrader');
 var roleClaimer = require('role.claimer');
 var roleAttacker = require('role.attacker');
+var roleMineralHarvester = require('role.mineralTransport');
 
 module.exports.loop = function () {
 	mainFunction(Game.spawns.Terminator, 'E48S7', false);
@@ -37,6 +38,7 @@ function mainFunction(TheTerminator, home, newBase) {
 	var minimumNumberOfLongDistanceHarvesters = 2;
 
 	var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
+	var numberOfMineralHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'mineral_harvester' && c.memory.home == home);
 	var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader' && c.memory.home == home);
 	var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
 	var numberOfRemoteBuilders1 = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.sId == '1');
@@ -52,6 +54,7 @@ function mainFunction(TheTerminator, home, newBase) {
 	var numberOfWallRepairers =  _.sum(Game.creeps, (c) => c.memory.role == 'wall_repairer');
 	var numberOfMiners =  _.sum(Game.creeps, (c) => c.memory.role == 'miner' && c.memory.sId == '0');
 	var numberOfMiners2 =  _.sum(Game.creeps, (c) => c.memory.role == 'miner2' && c.memory.sId == '0');
+	var numberOfResourceMiners =  _.sum(Game.creeps, (c) => c.memory.role == 'miner_resources' && c.memory.sId == '0');
 	var numberOfLongDistanceHarvesters3 =  _.sum(Game.creeps, (c) => c.memory.role == 'long_distance_harvester' && c.memory.sId == 3);
 	var numberOfLongDistanceHarvesters4 =  _.sum(Game.creeps, (c) => c.memory.role == 'long_distance_harvester' && c.memory.sId == 4);
 	var numberOfCloseLongDistance =  _.sum(Game.creeps, (c) => c.memory.sId == 2);
@@ -64,7 +67,9 @@ function mainFunction(TheTerminator, home, newBase) {
 		//roleBuilder.run(creep);
 		if (creep.memory.role == 'harvester') {
 			roleHarvester.run(creep);
-		} else if (creep.memory.role == 'upgrader') {
+		} if (creep.memory.role == 'mineral_harvester') {
+			roleMineralHarvester.run(creep);
+		}else if (creep.memory.role == 'upgrader') {
 			roleUpgrader.run(creep);
 		} else if (creep.memory.role == 'builder') {
 			roleBuilder.run(creep);
@@ -77,7 +82,9 @@ function mainFunction(TheTerminator, home, newBase) {
 		} else if (creep.memory.role == 'miner') {
 			roleMiner.run(creep, 17, 26, home);
 		} else if (creep.memory.role == 'miner2') {
-			console.log(roleMiner.run(creep, 24, 32, home) + " Miner");
+			roleMiner.run(creep, 24, 32, home);
+		} else if (creep.memory.role == 'miner_resources') {
+			console.log(roleMiner.run(creep, 36, 38, home) + "Resource Miner");
 		} else if (creep.memory.role == 'long_distance_harvester') {
 			roleLongDistanceHarvester.run(creep, home);
 		} else if (creep.memory.role == 'long_upgrader') {
@@ -156,6 +163,8 @@ function mainFunction(TheTerminator, home, newBase) {
 	if (!newBase) {
 		if(numberOfMiners < 2) name = TheTerminator.createCustomCreep(energy,  'miner', 0, home);
 		else if(numberOfMiners2 < 2) name = TheTerminator.createCustomCreep(energy,  'miner2', 0, home);
+		else if(numberOfResourceMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner_resources', 0, home);
+		else if(numberOfMineralHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'mineral_harvester', 0, home);
 	}
 	console.log("NUMBER OF UPGRADERS: " + numberOfUpgraders);
 	if(numberOfHarvesters < 3) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
@@ -164,11 +173,12 @@ function mainFunction(TheTerminator, home, newBase) {
 	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);
 	else if(numberOfRepairers < 2) name = TheTerminator.createCustomCreep(energy,  'repairer', 0, home);
 	else if(numberOfClaimers1  < 1) name = TheTerminator.createCustomCreep(energy,  'claimer', 0, home);
-	else if(numberOfLongDistanceHarvesters3 < 3) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 3, home);
+	else if(numberOfLongDistanceHarvesters3 < 2) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 3, home);
 	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 4, home);
 
 	//else if(numberOfAttackers  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute', home); }
-	else if(numberOfAttackers2  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute2', home); }
+	//else if(numberOfAttackers2  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute2', home); }
+	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);
 
 	//else if(numberOfHealers  < 4) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'healer', home); }
 	//else if(numberOfLongRange  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'long_range', home); }

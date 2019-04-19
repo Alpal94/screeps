@@ -4,6 +4,7 @@ module.exports = function() {
 			switch(roleName) {
 				case 'miner':
 				case 'miner2':
+				case 'miner_resources':
 					var numberOfParts = Math.floor( energy / 200 );
 					var body = [];
 					for (let i = 0; i < 3; i++) {
@@ -13,7 +14,6 @@ module.exports = function() {
 						body.push(MOVE);
 					}
 					break;
-				break;
 				case 'claimer':
 					var body = [];
 					body.push(MOVE);
@@ -28,7 +28,21 @@ module.exports = function() {
 					console.log(numberOfParts);
 					var numberOfParts = Math.floor( energy / 200 );
 					var body = [];
+					for (let i = 0; i < 1; i++) {
+						body.push(WORK);
+					}
 					for (let i = 0; i < numberOfParts; i++) {
+						body.push(CARRY);
+					}
+					for (let i = 0; i < numberOfParts; i++) {
+						body.push(MOVE);
+					}
+					break;
+				break;
+				case 'mineral_harvester':
+					var numberOfParts = Math.floor( energy / 200 );
+					var body = [];
+					for (let i = 0; i < 1; i++) {
 						body.push(WORK);
 					}
 					for (let i = 0; i < numberOfParts; i++) {
@@ -110,7 +124,7 @@ module.exports = function() {
 
 					var energyMove = 50;
 					var energyAttack = 80;
-					var numberOfTough = 0; //Math.floor( (energy - numberOfAttack*energyAttack - numberOfMove*energyMove) / 10 );
+					var numberOfTough = 10; //Math.floor( (energy - numberOfAttack*energyAttack - numberOfMove*energyMove) / 10 );
 					var body = [];
 					for (let i = 0; i < numberOfTough - 1; i++) {
 						body.push(TOUGH);
