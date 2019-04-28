@@ -2,8 +2,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
         // if in target room
-	console.log("CLAIMER ALIVE");
-    	var targetRoom = 'E47S7';
+    	var targetRoom = 'E47S6';
 	var homeRoom = 'E48S7';
         if (creep.room.name != targetRoom) {
 				// if in target room
@@ -30,7 +29,7 @@ module.exports = {
             } else {
 		    creep.moveTo(creep.room.controller);
 	    }
-	    //creep.signController(creep.room.controller, "All enemies of the Empire, die !!!");
+	    creep.signController(creep.room.controller, "All enemies of the Empire, die !!!");
         }
     }
 };

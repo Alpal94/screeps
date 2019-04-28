@@ -2,7 +2,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
 	var homeRoom = 'E48S7';
-	var targetRoom = 'E48S2';
+	var targetRoom = 'E47S8';
 	//var targetRoom2 = 'E44S8';
 	var targetRoom2 = 'E47S7';
 

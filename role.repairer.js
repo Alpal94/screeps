@@ -2,6 +2,22 @@ var roleUpgrader = require('role.upgrader');
 
 module.exports = {
 	run: function (creep) {
+		console.log("Repairer: " + creep.room.name);
+		if(creep.memory.sId == 2) {
+			var targetRoom = 'E47S7';
+			if (creep.room.name != targetRoom) {
+				if(creep.pos.x > 1 && creep.room.name == creep.memory.home) {
+					var pos = new RoomPosition(1, 34, creep.memory.home); 
+					creep.moveTo(pos);
+					return;
+				}
+			    // find exit to target room
+			    var exit = creep.room.findExitTo(targetRoom);
+			    // move to exit
+			    creep.moveTo(creep.pos.findClosestByRange(exit));
+			    return;
+			}
+		}
 		if(creep.memory.working == true && creep.carry.energy == 0) {
 		       creep.memory.working = false;
 		}

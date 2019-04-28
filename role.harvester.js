@@ -12,7 +12,7 @@ module.exports = {
 		if(creep.memory.working == true) {
 		    //console.log("WORKING");
 			var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-				filter: (s) => s.energy < s.energyCapacity && s.structureType !== STRUCTURE_LINK
+				filter: (s) => s.energy < s.energyCapacity && s.structureType !== STRUCTURE_LINK && (s.structureType !== STRUCTURE_TOWER || creep.memory.sId === 1)
 			});
 			if (structure != undefined) {
 				if(creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -21,8 +21,19 @@ module.exports = {
 				else { /*console.log("FILLING UP");*/ }
 			} else {
 				var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-					filter: (s) => s.structureType === STRUCTURE_STORAGE
+					filter: (s) => s.structureType === STRUCTURE_TERMINAL && s.store[RESOURCE_ENERGY] < 10000
 				});
+				if(structure === undefined || structure === null) {
+					structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+						filter: (s) => s.structureType === STRUCTURE_STORAGE 
+					});
+				}
+					structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+						filter: (s) => s.structureType === STRUCTURE_STORAGE 
+					});
+
+				console.log("HERE HARVESTER");
+				console.log(structure);
 				console.log(structure);
 				if (structure != undefined) {
 					if(creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

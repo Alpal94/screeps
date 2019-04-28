@@ -13,16 +13,15 @@ var roleAttacker = require('role.attacker');
 var roleMineralHarvester = require('role.mineralTransport');
 
 module.exports.loop = function () {
-	mainFunction(Game.spawns.Terminator, 'E48S7', false);
-	if(Game.spawns.TheTerminator) supportBaseEnergy(Game.spawns.TheTerminator, 'E48S6', false);
+	mainFunction(Game.spawns.Terminator, Game.spawns.TerminatorT850, 'E48S7', false);
+	if(Game.spawns.TheTerminator) supportBaseEnergy(Game.spawns.TheTerminator, 'E48S6', true);
 };
 
-function mainFunction(TheTerminator, home, newBase) {
+function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 	const linkFrom = Game.rooms[home].lookForAt('structure', 38, 3)[0];
-	console.log(linkFrom);
 
 	const linkTo = Game.rooms[home].lookForAt('structure', 11, 28)[0];
-	console.log(linkFrom.transferEnergy(linkTo) + " LINK");
+
 
 	for(let name in Memory.creeps) {
 		if (Game.creeps[name] == undefined) {
@@ -37,12 +36,16 @@ function mainFunction(TheTerminator, home, newBase) {
 	var minimumNumberOfMiners = 2;
 	var minimumNumberOfLongDistanceHarvesters = 2;
 
-	var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
+	var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester' && c.memory.home == home && c.memory.sId == '0');
+	var numberOfTowerHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester' && c.memory.home == home && c.memory.sId == '1');
 	var numberOfMineralHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'mineral_harvester' && c.memory.home == home);
 	var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader' && c.memory.home == home);
-	var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
+	var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.home == home && c.memory.sId == '0');
 	var numberOfRemoteBuilders1 = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.sId == '1');
-	var numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
+	var numberOfRemoteBuilders2 = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.sId == '2');
+	var numberOfRemoteBuilders3 = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.sId == '3');
+	var numberOfRemoteRepairers2 = _.sum(Game.creeps, (c) => c.memory.role == 'repairer' && c.memory.sId == '2');
+	var numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer' && c.memory.home == home && c.memory.sId == '0');
 	var numberOfClaimers1 = _.sum(Game.creeps, (c) => c.memory.role == 'claimer');
 
 	var numberOfAttackers = _.sum(Game.creeps, (c) => c.memory.role == 'attacker' && c.memory.home == home && c.memory.type == 'brute');
@@ -84,7 +87,7 @@ function mainFunction(TheTerminator, home, newBase) {
 		} else if (creep.memory.role == 'miner2') {
 			roleMiner.run(creep, 24, 32, home);
 		} else if (creep.memory.role == 'miner_resources') {
-			console.log(roleMiner.run(creep, 36, 38, home) + "Resource Miner");
+			roleMiner.run(creep, 36, 38, home);
 		} else if (creep.memory.role == 'long_distance_harvester') {
 			roleLongDistanceHarvester.run(creep, home);
 		} else if (creep.memory.role == 'long_upgrader') {
@@ -103,19 +106,16 @@ function mainFunction(TheTerminator, home, newBase) {
 		let towerNumber = 0;
 		for (let tower of towers) {
 			towerNumber++;
-			console.log(towerNumber + " TOWER");
 			var target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 			if (target != undefined) {
 				tower.attack(target);
 			} else {
 				var walls;
 				if(towerNumber === 1) {
-					console.log('rampart');
 					walls = tower.room.find(FIND_STRUCTURES, {
 						filter: (s) => s.structureType == STRUCTURE_RAMPART
 					});
 				} else {
-					console.log('walls');
 					walls = tower.room.find(FIND_STRUCTURES, {
 						filter: (s) => s.structureType == STRUCTURE_RAMPART || s.structureType == STRUCTURE_WALL
 					});
@@ -144,7 +144,6 @@ function mainFunction(TheTerminator, home, newBase) {
 					var date = new Date(); 
 					var timestamp = date.getTime();
 					if(timestamp % 1000 * 120 > 1000 * 110) {
-						console.log("fire" + timestamp % 1000 * 120 );
 						tower.repair(target);
 					} else {
 					}
@@ -161,24 +160,30 @@ function mainFunction(TheTerminator, home, newBase) {
 	console.log(TheTerminator.room.energyCapacityAvailable);*/
 	var energyLong = TheTerminator.room.energyCapacityAvailable; 
 	if (!newBase) {
-		if(numberOfMiners < 2) name = TheTerminator.createCustomCreep(energy,  'miner', 0, home);
+		if(numberOfHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
+		else if(numberOfMiners < 2) name = TheTerminator.createCustomCreep(energy,  'miner', 0, home);
 		else if(numberOfMiners2 < 2) name = TheTerminator.createCustomCreep(energy,  'miner2', 0, home);
 		else if(numberOfResourceMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner_resources', 0, home);
 		else if(numberOfMineralHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'mineral_harvester', 0, home);
 	}
-	console.log("NUMBER OF UPGRADERS: " + numberOfUpgraders);
-	if(numberOfHarvesters < 3) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
-	else if(numberOfBuilders < 3) name = TheTerminator.createCustomCreep(energy,  'builder', 0, home);
-	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home);
-	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);
+	console.log("NO REPAIRERS: " + numberOfRepairers);
+
+	if(numberOfHarvesters < 2) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
+	if(numberOfTowerHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 1, home);
+	else if(numberOfBuilders < 2) name = TheTerminator.createCustomCreep(energy,  'builder', 0, home);
+
+	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(2000,  'upgrader', 0, home);
 	else if(numberOfRepairers < 2) name = TheTerminator.createCustomCreep(energy,  'repairer', 0, home);
-	else if(numberOfClaimers1  < 1) name = TheTerminator.createCustomCreep(energy,  'claimer', 0, home);
-	else if(numberOfLongDistanceHarvesters3 < 2) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 3, home);
-	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(energyLong,  'long_distance_harvester', 4, home);
+	else if(numberOfLongDistanceHarvesters3 < 3) name = TheTerminator.createCustomCreep(energy,  'long_distance_harvester', 3, home);
+	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(energy,  'long_distance_harvester', 4, home);
+	else if(numberOfRemoteRepairers2 < 1) name = TheTerminator.createCustomCreep(energy,  'repairer', 2, home);
+	//else if(numberOfClaimers1  < 1) name = TheTerminator.createCustomCreep(energy,  'claimer', 0, home);
+	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home);
+	else if(numberOfRemoteBuilders2 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 2, home);
+	else if(numberOfRemoteBuilders3 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 3, home);
 
 	//else if(numberOfAttackers  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute', home); }
 	//else if(numberOfAttackers2  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute2', home); }
-	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);
 
 	//else if(numberOfHealers  < 4) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'healer', home); }
 	//else if(numberOfLongRange  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'long_range', home); }
@@ -194,6 +199,9 @@ function mainFunction(TheTerminator, home, newBase) {
 	if(!(name < 0) && name != 'undefined') {
 		console.log("Spawned new creep: " + name);
 	}
+
+	
+	//marketOrder(TheTerminator);
 }
 
 function supportBaseEnergy(TheTerminator, home, newBase) {
@@ -268,7 +276,12 @@ function supportBaseEnergy(TheTerminator, home, newBase) {
 	var energy = TheTerminator.room.energyCapacityAvailable > 800 ? 800 : TheTerminator.room.energyCapacityAvailable; 
 	console.log(home);
 	console.log(numberOfUpgraders + " Number of upgraders");
-	if(numberOfUpgraders < 2) { name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);}
+	if (!newBase) {
+		if(numberOfMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner', 1, home);
+		else if(numberOfMiners2 < 1) name = TheTerminator.createCustomCreep(energy,  'miner2', 1, home);
+	}
+	if(numberOfHarvesters < 1) { name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);}
+	if(numberOfUpgraders < 4) { name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);}
 	if(numberOfRepairers < 1) { name = TheTerminator.createCustomCreep(energy,  'repairer', 0, home);}
 	/*
 	var energyLong = TheTerminator.room.energyCapacityAvailable; 
@@ -285,4 +298,26 @@ function supportBaseEnergy(TheTerminator, home, newBase) {
 	if(!(name < 0) && name != 'undefined') {
 		console.log("Spawned new creep: " + name);
 	}*/
+}
+
+
+function marketOrder(spawn) {
+	console.log(spawn.room.terminal + " TERMINAL");
+	if (spawn.room.terminal && (Game.time % 10 == 0)) {
+		console.log("GAME TERMINAL");
+	    if (spawn.room.terminal.store[RESOURCE_ENERGY] >= 2000 && spawn.room.terminal.store[RESOURCE_KEANIUM] >= 2000) {
+		var orders = Game.market.getAllOrders(order => order.resourceType == RESOURCE_KEANIUM &&
+						      order.type == ORDER_BUY &&
+						      Game.market.calcTransactionCost(200, spawn.room.name, order.roomName) < 400);
+		console.log('Keanium buy orders found: ' + orders.length);
+		orders.sort(function(a,b){return b.price - a.price;});
+		console.log('Best price: ' + orders[0].price);
+		if (orders[0].price > 0.7) {
+		    var result = Game.market.deal(orders[0].id, 200, spawn.room.name);
+		    if (result == 0) {
+			console.log('Order completed successfully');
+		    }
+		}
+	    }
+	}
 }

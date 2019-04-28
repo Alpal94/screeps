@@ -54,27 +54,28 @@ module.exports = function() {
 					break;
 				break;
 				case 'long_distance_harvester':
+					console.log("CREATE LONG DISTANCE");
 					var numberOfParts = Math.floor( energy / 200 );
 					var body = [];
 					if(id == 2) {
-						for (let i = 0; i < Math.floor(numberOfParts); i++) {
+						for (let i = 0; i < Math.floor(5); i++) {
 							body.push(WORK);
 						}
 
-						for (let i = 0; i < Math.floor(numberOfParts); i++) {
+						for (let i = 0; i < Math.floor(5); i++) {
 							body.push(CARRY);
 						}
-						for (let i = 0; i < Math.floor(numberOfParts); i++) {
+						for (let i = 0; i < Math.floor(5); i++) {
 							body.push(MOVE);
 						} 
 					} else {
-						for (let i = 0; i < Math.floor(numberOfParts); i++) {
+						for (let i = 0; i < Math.floor(5); i++) {
 							body.push(WORK);
 						}
-						for (let i = 0; i < Math.floor(numberOfParts); i++) {
+						for (let i = 0; i < Math.floor(5); i++) {
 							body.push(CARRY);
 						}
-						for (let i = 0; i < Math.floor(numberOfParts); i++) {
+						for (let i = 0; i < Math.floor(5); i++) {
 							body.push(MOVE);
 						} 
 

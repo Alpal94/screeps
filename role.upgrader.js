@@ -22,7 +22,7 @@ module.exports = {
 		     	var containers = creep.room.find(FIND_STRUCTURES, {
 		        filter: (structure) =>
 			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 200) ||
-			        (structure.structureType == STRUCTURE_STORAGE) 
+			        (structure.structureType == STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] > 200) 
 			});
 			var source = creep.pos.findClosestByPath(containers);
 			if(creep.withdraw(source, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

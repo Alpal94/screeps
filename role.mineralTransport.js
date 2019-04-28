@@ -1,6 +1,16 @@
 var roleUpgrader = require('role.upgrader');
 module.exports = {
 	run: function (creep) {
+		var containers = creep.room.find(FIND_STRUCTURES, {
+			filter: (structure) =>
+			        (structure.structureType === STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_KEANIUM] > 0) 
+			});
+		var source = creep.pos.findClosestByPath(containers);
+		if((!source || creep.carry.energy > 0) && !(creep.carry.energy === 0 && _.sum(creep.carry) > 0)){
+			roleUpgrader.run(creep);
+			return;
+		}
+
 		let exploitStorage = false;
 		if(creep.memory.working == true && _.sum(creep.carry) == 0) {
 		       creep.memory.working = false;
