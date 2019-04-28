@@ -142,9 +142,7 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 				if(targetRampart != undefined && tower.energy > 400) {
 					tower.repair(targetRampart);
 				} if(target != undefined && tower.energy > 800) {
-					var date = new Date(); 
-					var timestamp = date.getTime();
-					if(timestamp % 1000 * 140 > 1000 * 130) {
+					if(Game.time % 60 == 0) {
 						tower.repair(target);
 					} else {
 					}
