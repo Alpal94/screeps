@@ -21,6 +21,7 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 	const linkFrom = Game.rooms[home].lookForAt('structure', 38, 3)[0];
 
 	const linkTo = Game.rooms[home].lookForAt('structure', 11, 28)[0];
+	linkFrom.transferEnergy(linkTo);
 
 
 	for(let name in Memory.creeps) {
