@@ -62,7 +62,7 @@ module.exports = {
 				} else if(creep.memory.sId == 3) {
 					roleRepairer.run(creep);
 				} else {
-					roleUpgrader.run(creep);					
+					roleHarvester.run(creep);					
 										
 				}
 			}

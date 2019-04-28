@@ -144,7 +144,7 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 				} if(target != undefined && tower.energy > 800) {
 					var date = new Date(); 
 					var timestamp = date.getTime();
-					if(timestamp % 1000 * 120 > 1000 * 110) {
+					if(timestamp % 1000 * 140 > 1000 * 130) {
 						tower.repair(target);
 					} else {
 					}
@@ -171,12 +171,12 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 
 	if(numberOfHarvesters < 2) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
 	if(numberOfTowerHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 1, home);
-	else if(numberOfBuilders < 2) name = TheTerminator.createCustomCreep(energy,  'builder', 0, home);
+	else if(numberOfBuilders < 1) name = TheTerminator.createCustomCreep(2000,  'builder', 0, home);
 
-	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(2000,  'upgrader', 0, home);
-	else if(numberOfRepairers < 2) name = TheTerminator.createCustomCreep(energy,  'repairer', 0, home);
-	else if(numberOfLongDistanceHarvesters3 < 3) name = TheTerminator.createCustomCreep(energy,  'long_distance_harvester', 3, home);
-	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(energy,  'long_distance_harvester', 4, home);
+	else if(numberOfUpgraders < 2) name = TheTerminator.createCustomCreep(2000,  'upgrader', 0, home);
+	else if(numberOfRepairers < 1) name = TheTerminator.createCustomCreep(2000,  'repairer', 0, home);
+	else if(numberOfLongDistanceHarvesters3 < 1) name = TheTerminator.createCustomCreep(2500,  'long_distance_harvester', 3, home);
+	else if(numberOfLongDistanceHarvesters4 < 1) name = TheTerminator.createCustomCreep(2500,  'long_distance_harvester', 4, home);
 	else if(numberOfRemoteRepairers2 < 1) name = TheTerminator.createCustomCreep(energy,  'repairer', 2, home);
 	//else if(numberOfClaimers1  < 1) name = TheTerminator.createCustomCreep(energy,  'claimer', 0, home);
 	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home);
