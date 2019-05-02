@@ -58,24 +58,24 @@ module.exports = function() {
 					var numberOfParts = Math.floor( energy / 200 );
 					var body = [];
 					if(id == 2) {
-						for (let i = 0; i < Math.floor(5); i++) {
+						for (let i = 0; i < Math.floor(numberOfParts); i++) {
 							body.push(WORK);
 						}
 
-						for (let i = 0; i < Math.floor(5); i++) {
+						for (let i = 0; i < Math.floor(numberOfParts); i++) {
 							body.push(CARRY);
 						}
-						for (let i = 0; i < Math.floor(5); i++) {
+						for (let i = 0; i < Math.floor(numberOfParts); i++) {
 							body.push(MOVE);
 						} 
 					} else {
-						for (let i = 0; i < Math.floor(5); i++) {
+						for (let i = 0; i < Math.floor(numberOfParts); i++) {
 							body.push(WORK);
 						}
-						for (let i = 0; i < Math.floor(5); i++) {
+						for (let i = 0; i < Math.floor(numberOfParts); i++) {
 							body.push(CARRY);
 						}
-						for (let i = 0; i < Math.floor(5); i++) {
+						for (let i = 0; i < Math.floor(numberOfParts); i++) {
 							body.push(MOVE);
 						} 
 

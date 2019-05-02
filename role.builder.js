@@ -41,6 +41,11 @@ module.exports = {
 			    return;
 			}
 		}
+		var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+		if(!constructionSite) {
+			roleHarvester.run(creep);
+			return;
+		}
 		if(creep.memory.working == true && creep.carry.energy == 0) {
 		       creep.memory.working = false;
 		}
@@ -74,8 +79,7 @@ module.exports = {
 			}*/
 		     	var containers = creep.room.find(FIND_STRUCTURES, {
 		        filter: (structure) =>
-			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 200) ||
-			        (structure.structureType == STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] > 200)
+			        (structure.structureType == STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_ENERGY] > 200)
 			});
 			var source = creep.pos.findClosestByPath(containers);
 			if(creep.withdraw(source, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
