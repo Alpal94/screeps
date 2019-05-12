@@ -11,20 +11,19 @@ var roleLongUpgrader = require('role.longUpgrader');
 var roleClaimer = require('role.claimer');
 var roleAttacker = require('role.attacker');
 var roleMineralHarvester = require('role.mineralTransport');
+var MineralHarvester = require('role.mineralHarvester');
 
-class Attacker  {
-	init() {
-		this.count = 0;
-	}
-	greet() {
-		console.log('hello world');
-		console.log(this.count);
-		this.count++;
-	}
-}
-const attack = new Attacker();
-attack.init();
+
+
+
+
+//const _mineralHarvester = new MineralHarvester();
+//_mineralHarvester.init(Game.spawns.Terminator, 'E48S7', 'mineral-harvester', 4);
+
 module.exports.loop = function () {
+	//_mineralHarvester.run();
+
+
 	mainFunction(Game.spawns.Terminator, Game.spawns.TerminatorT850, 'E48S7', false);
 	if(Game.spawns.TheTerminator) supportBaseEnergy(Game.spawns.TheTerminator, 'E48S6', true);
 	//attack.greet();
@@ -179,7 +178,6 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 		else if(numberOfResourceMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner_resources', 0, home, undefined);
 		else if(numberOfMineralHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'mineral_harvester', 0, home, undefined);
 	}
-	console.log("NO REPAIRERS: " + numberOfRepairers);
 
 	if(numberOfHarvesters < 3) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home, undefined);
 	if(numberOfTowerHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 1, home, undefined);
@@ -322,8 +320,6 @@ function supportBaseEnergy(TheTerminator, home, newBase) {
 	var name = undefined;
 	var energy = TheTerminator.room.energyCapacityAvailable > 800 ? 800 : TheTerminator.room.energyCapacityAvailable; 
 	var totalEnergy = TheTerminator.room.energyCapacityAvailable; 
-	console.log(home);
-	console.log(numberOfHarvesters + " Number of upgraders WHAT");
 	if (!newBase) {
 		//if(numberOfMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner', 1, home, undefined);
 		//else if(numberOfMiners2 < 1) name = TheTerminator.createCustomCreep(energy,  'miner2', 1, home, undefined);
@@ -351,9 +347,7 @@ function supportBaseEnergy(TheTerminator, home, newBase) {
 
 
 function marketOrder(spawn) {
-	console.log(spawn.room.terminal + " TERMINAL");
 	if (spawn.room.terminal && (Game.time % 10 == 0)) {
-		console.log("GAME TERMINAL");
 	    if (spawn.room.terminal.store[RESOURCE_ENERGY] >= 2000 && spawn.room.terminal.store[RESOURCE_KEANIUM] >= 2000) {
 		var orders = Game.market.getAllOrders(order => order.resourceType == RESOURCE_KEANIUM &&
 						      order.type == ORDER_BUY &&
