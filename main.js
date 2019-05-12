@@ -208,7 +208,7 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 	*/
 
 	if(!(name < 0) && name != 'undefined') {
-		console.log("Spawned new creep: " + name);
+		//console.log("Spawned new creep: " + name);
 	}
 
 	

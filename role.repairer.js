@@ -2,7 +2,6 @@ var roleUpgrader = require('role.upgrader');
 
 module.exports = {
 	run: function (creep) {
-		console.log("Repairer: " + creep.room.name);
 		if(creep.memory.sId == 2) {
 			var targetRoom = 'E47S7';
 			if (creep.room.name != targetRoom) {

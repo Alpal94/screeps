@@ -10,7 +10,6 @@ module.exports = {
 		}	
 
 		if(creep.memory.working == true) {
-		    //console.log("WORKING");
 			var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
 				filter: (s) => s.energy < s.energyCapacity && s.structureType !== STRUCTURE_LINK && (s.structureType !== STRUCTURE_TOWER || creep.memory.sId === 1)
 			});
@@ -18,7 +17,7 @@ module.exports = {
 				if(creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(structure);
 				}
-				else { /*console.log("FILLING UP");*/ }
+				else {}
 			} else {
 				var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
 					filter: (s) => s.structureType === STRUCTURE_TERMINAL && s.store[RESOURCE_ENERGY] < 10000
@@ -32,9 +31,6 @@ module.exports = {
 						filter: (s) => s.structureType === STRUCTURE_STORAGE 
 					});
 
-				console.log("HERE HARVESTER");
-				console.log(structure);
-				console.log(structure);
 				if (structure != undefined) {
 					if(creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 						creep.moveTo(structure);
@@ -55,7 +51,6 @@ module.exports = {
 				creep.moveTo(source);
 			}
 			if (source === null || source === undefined) {
-				console.log("DANGER");
 				var source = creep.pos.findClosestByPath(FIND_SOURCES);
 				if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(source);
@@ -69,7 +64,6 @@ module.exports = {
 			});
 			if (dropenergy.length) {
 				var pickupDropped = creep.pickup(dropenergy[0]);
-				console.log(pickupDropped);
 			} else 
 			if (dropenergy.length > 0 && (pickupDropped == ERR_NOT_IN_RANGE) ) {
 				creep.moveTo(dropenergy[0]);

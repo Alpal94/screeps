@@ -6,7 +6,7 @@ module.exports = {
 		var disableLink = false;
 		if(creep.memory.sId == 1) targetRoom = 'E47S7';
 		if(creep.memory.sId == 3) { targetRoom = 'E47S7'; disableLink = true; }
-		if(creep.memory.sId == 4) { targetRoom = 'E48S6'; console.log(creep.pos + " HERE LONG"); }
+		if(creep.memory.sId == 4) { targetRoom = 'E48S6'; }
 		if(creep.memory.memory && creep.memory.memory.target) { targetRoom = creep.memory.memory.target; }
 
 		var homeRoom = creep.memory.home;
@@ -19,13 +19,11 @@ module.exports = {
 		}	
 		var target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 		if (target != undefined) {
-			console.log("kill");
-			console.log(creep.attack(target));
+			creep.attack(target);
 		} else {
 		}
 
 		if(creep.memory.working == true ) {
-			console.log("long working");
 		    if(creep.room.name == homeRoom) {
 			var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
 				filter: (s) => s.energy < s.energyCapacity && s.structureType != STRUCTURE_TOWER && (s.structureType != STRUCTURE_LINK || !disableLink)
@@ -48,7 +46,7 @@ module.exports = {
 		    } else  {
 			var pos = new RoomPosition(5, 8, homeRoom); 
 			if(creep.memory.sId == 1 || creep.memory.sId == 3) {
-				console.log(creep.moveTo(pos));
+				creep.moveTo(pos);
 			} else {
 			    var exit = creep.room.findExitTo(homeRoom);
 			    creep.moveTo(creep.pos.findClosestByRange(exit));
@@ -67,7 +65,6 @@ module.exports = {
 					creep.moveTo(source);
 				}
 				if (source === null || source === undefined) {
-					console.log("DANGER");
 					var source = creep.pos.findClosestByPath(FIND_SOURCES, {
 			        		filter: (s) => s.energy > 0
 		        		});
@@ -79,7 +76,6 @@ module.exports = {
 				       var pos = new RoomPosition(13, 35, targetRoom); 
 				    var exit; 
 
-					if(creep.memory.sId == 4) { console.log(creep.room.name + " HOME " + homeRoom + "LONG TO LONG"); }
 				    creep.moveTo(pos);
 			}
 
@@ -90,7 +86,6 @@ module.exports = {
 			});
 			if (dropenergy.length) {
 				var pickupDropped = creep.pickup(dropenergy[0]);
-				console.log(pickupDropped);
 			} else 
 			if (dropenergy.length > 0 && (pickupDropped == ERR_NOT_IN_RANGE) ) {
 				creep.moveTo(dropenergy[0]);

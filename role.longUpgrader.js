@@ -2,7 +2,6 @@ var roleUpgrader = require('role.upgrader');
 
 module.exports = {
 	run: function (creep) {
-		console.log("LONG UPGRADER ARRIVED");
 		var targetRoom = 'W33N48';
 		var pos = new RoomPosition(3, 30, targetRoom); 
 		if(creep.room.name != targetRoom ) {

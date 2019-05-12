@@ -7,7 +7,6 @@ module.exports = {
 	var targetRoom2 = 'E47S7';
 
 
-	console.log(creep.pos + " BRUTE");
 
 	switch(creep.memory.type) {
 		case 'healer':
@@ -16,7 +15,6 @@ module.exports = {
 					return object.hits < object.hitsMax || object.memory.type == 'brute';
 				}
 			});
-			console.log(target + " HEALER");
 			if(target) {
 				creep.heal(target);
 				creep.moveTo(target);
@@ -41,7 +39,6 @@ module.exports = {
 
 		break;
 			case 'brute2':
-		console.log("BRUTE @2 ALIVE  " + creep.pos);
 				executeKillEverything(homeRoom, targetRoom2, creep);
 				break;
 			case 'brute':
@@ -62,9 +59,8 @@ module.exports = {
 
 	    function executeBrute(homeRoom, targetRoom, creep)  {
 		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-		console.log(target);
 		if(target) {
-			console.log(creep.attack(target));
+			creep.attack(target);
 			if(creep.attack(target) == ERR_NOT_IN_RANGE) {
 				creep.moveTo(target);
 			}
@@ -82,7 +78,6 @@ module.exports = {
 			    creep.moveTo(creep.pos.findClosestByRange(exit));
 			}
 			else {
-				console.log("WHATS WRONG");
 				var pos = new RoomPosition(30, 30, targetRoom); 
 				creep.moveTo(pos);
 			}
@@ -135,11 +130,9 @@ module.exports = {
 
 	function navigateRoomE44S8(creep) {
 		var room = 'E44S8';
-		if(creep.room.name !== room) { console.log("WHAT THE HELL"); return true; }
-		console.log("OK ATTACkEr");	
+		if(creep.room.name !== room) { return true; }
 
 		if(creep.pos.x > 25 && creep.pos.y < 45) {
-			console.log("ATTACK CREEP HERE");
 			var pos = new RoomPosition(24, 46, room); 
 			creep.moveTo(pos);
 			return false;
@@ -152,7 +145,6 @@ module.exports = {
 		}
 	}
 	    function executeKillEverything2(homeRoom, targetRoom, creep)  {
-		    console.log("LOOTER DESTROYER + " + creep.pos + " " + targetRoom);
 		const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 		if(target) {
 			if(creep.attack(target) == ERR_NOT_IN_RANGE) {

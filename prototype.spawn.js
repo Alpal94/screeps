@@ -24,8 +24,6 @@ module.exports = function() {
 				break;
 				case 'harvester':
 
-					console.log('number of parts');
-					console.log(numberOfParts);
 					var numberOfParts = Math.floor( energy / 200 );
 					var body = [];
 					for (let i = 0; i < 1; i++) {
@@ -54,7 +52,6 @@ module.exports = function() {
 					break;
 				break;
 				case 'long_distance_harvester':
-					console.log("CREATE LONG DISTANCE");
 					var numberOfParts = Math.floor( energy / 200 );
 					var body = [];
 					if(id == 2) {
@@ -101,10 +98,8 @@ module.exports = function() {
 		};
 	StructureSpawn.prototype.createAttackerCreep = 
 		function(energy, roleName, id, type, home) {
-			console.log("GENERATE ATTACK");
 			switch(type) {
 				case 'healer':
-					console.log("CREATED HEAL");
 					var numberOfHeal = 5;
 					var energyMove = 50;
 					var energyHeal = 250;
@@ -119,7 +114,6 @@ module.exports = function() {
 					break;
 				case 'brute':
 				default:
-					console.log("CREATED BRUTE + " + type + " + " + energy);
 					var numberOfAttack = 10;
 					var numberOfMove = 20;
 
