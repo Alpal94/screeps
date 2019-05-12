@@ -11,17 +11,18 @@ var roleLongUpgrader = require('role.longUpgrader');
 var roleClaimer = require('role.claimer');
 var roleAttacker = require('role.attacker');
 var roleMineralHarvester = require('role.mineralTransport');
-var MineralHarvester = require('role.mineralHarvester');
+
+var CreepControl = require('creepControlHandler');
 
 
 
 
 
-//const _mineralHarvester = new MineralHarvester();
-//_mineralHarvester.init(Game.spawns.Terminator, 'E48S7', 'mineral-harvester', 4);
+const _mineralHarvester = new CreepControl();
+_mineralHarvester.init(Game.spawns.TheTerminator, 'E48S6', 'mineral-harvester', 1, roleUpgrader);
 
 module.exports.loop = function () {
-	//_mineralHarvester.run();
+	_mineralHarvester.run();
 
 
 	mainFunction(Game.spawns.Terminator, Game.spawns.TerminatorT850, 'E48S7', false);
