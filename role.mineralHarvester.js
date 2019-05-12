@@ -6,7 +6,7 @@ class MineralHarvester {
 		this.spawn = spawn;
 		this.role = role;
 		this.number = number;
-		this.creeps = [];
+		this.creeps = this.setUpCreeps();
 	}
 
 	run() {
@@ -23,10 +23,8 @@ class MineralHarvester {
 			let creep = Game.creeps[name];
 			console.log(Game.creeps);
 			if(creep) {
-				console.log("HOLY SHIT");
 				console.log(roleUpgrader.run(creep));
 			} else {
-				console.log("KILL");
 				this.creeps.splice(i, 1);
 			}
 		}
@@ -53,12 +51,20 @@ class MineralHarvester {
 			body.push(MOVE);
 		}
 
-		var creepName = 'harvester' + Game.time;
+		var creepName = this.role + Game.time;
 		this.creeps.push(creepName);
 		console.log(creepName);
-		return this.spawn.spawnCreep(body, creepName, { memory: {role: 'mineral-harvester', working: false , sId: 0 , home: this.home, memory: {}}});
+		return this.spawn.spawnCreep(body, creepName, { memory: {role: this.role, working: false , sId: 0 , home: this.home, memory: {}}});
+	}
 
-
+	setUpCreeps() {
+		let creeps = [];
+		for(let name in Game.creeps) {
+			if(name !== undefined && Game.creeps[name].memory.role == this.role)
+				creeps.push(name);
+			
+		}
+		return creeps;
 	}
 }
 
