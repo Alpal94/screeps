@@ -1,6 +1,6 @@
 module.exports = function() {
 	StructureSpawn.prototype.createCustomCreep = 
-		function(energy, roleName, id, home) {
+		function(energy, roleName, id, home, memory) {
 			switch(roleName) {
 				case 'miner':
 				case 'miner2':
@@ -97,7 +97,7 @@ module.exports = function() {
 					break;
 			}
 
-			return this.createCreep(body, undefined, { role: roleName, working: false , sId: id , home: home});
+			return this.createCreep(body, undefined, { role: roleName, working: false , sId: id , home: home, memory: memory});
 		};
 	StructureSpawn.prototype.createAttackerCreep = 
 		function(energy, roleName, id, type, home) {
@@ -138,7 +138,7 @@ module.exports = function() {
 					}
 					break;
 			}
-			return this.createCreep(body, undefined, { role: roleName, working: false , sId: id , type: type, home: home});
+			return this.createCreep(body, undefined, { role: roleName, working: false , sId: id , type: type, home: home, memory: memory});
 		};
 
 };

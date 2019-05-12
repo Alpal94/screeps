@@ -2,8 +2,8 @@ module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
         // if in target room
-    	var targetRoom = 'E47S6';
-	var homeRoom = 'E48S7';
+    	var targetRoom = 'E47S7';
+	var homeRoom = creep.memory.home;
         if (creep.room.name != targetRoom) {
 				// if in target room
 				if (creep.room.name != targetRoom) {

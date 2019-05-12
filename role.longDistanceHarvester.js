@@ -7,8 +7,9 @@ module.exports = {
 		if(creep.memory.sId == 1) targetRoom = 'E47S7';
 		if(creep.memory.sId == 3) { targetRoom = 'E47S7'; disableLink = true; }
 		if(creep.memory.sId == 4) { targetRoom = 'E48S6'; console.log(creep.pos + " HERE LONG"); }
+		if(creep.memory.memory && creep.memory.memory.target) { targetRoom = creep.memory.memory.target; }
 
-		var homeRoom = home;
+		var homeRoom = creep.memory.home;
 
 		if(creep.memory.working == true && creep.carry.energy == 0) {
 		       creep.memory.working = false;

@@ -156,7 +156,7 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 				if(targetRampart != undefined && tower.energy > 400) {
 					tower.repair(targetRampart);
 				} if(target != undefined && tower.energy > 800) {
-					if(Game.time % 30 == 0) {
+					if(Game.time % 40 == 0) {
 						tower.repair(target);
 					} else {
 					}
@@ -173,33 +173,33 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 	console.log(TheTerminator.room.energyCapacityAvailable);*/
 	var energyLong = TheTerminator.room.energyCapacityAvailable; 
 	if (!newBase) {
-		if(numberOfHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
-		else if(numberOfMiners < 2) name = TheTerminator.createCustomCreep(energy,  'miner', 0, home);
-		else if(numberOfMiners2 < 2) name = TheTerminator.createCustomCreep(energy,  'miner2', 0, home);
-		else if(numberOfResourceMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner_resources', 0, home);
-		else if(numberOfMineralHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'mineral_harvester', 0, home);
+		if(numberOfHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home, undefined);
+		else if(numberOfMiners < 2) name = TheTerminator.createCustomCreep(energy,  'miner', 0, home, undefined);
+		else if(numberOfMiners2 < 2) name = TheTerminator.createCustomCreep(energy,  'miner2', 0, home, undefined);
+		else if(numberOfResourceMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner_resources', 0, home, undefined);
+		else if(numberOfMineralHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'mineral_harvester', 0, home, undefined);
 	}
 	console.log("NO REPAIRERS: " + numberOfRepairers);
 
-	if(numberOfHarvesters < 3) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);
-	if(numberOfTowerHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 1, home);
-	else if(numberOfBuilders < 1) name = TheTerminator.createCustomCreep(2000,  'builder', 0, home);
+	if(numberOfHarvesters < 3) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home, undefined);
+	if(numberOfTowerHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 1, home, undefined);
+	else if(numberOfBuilders < 1) name = TheTerminator.createCustomCreep(2000,  'builder', 0, home, undefined);
 
-	else if(numberOfUpgraders < 2) name = TheTerminator.createCustomCreep(2000,  'upgrader', 0, home);
-	else if(numberOfRepairers < 1) name = TheTerminator.createCustomCreep(2000,  'repairer', 0, home);
-	else if(numberOfLongDistanceHarvesters3 < 2) name = TheTerminator.createCustomCreep(2600,  'long_distance_harvester', 3, home);
-	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(2600,  'long_distance_harvester', 4, home);
-	else if(numberOfRemoteRepairers2 < 1) name = TheTerminator.createCustomCreep(energy,  'repairer', 2, home);
-	//else if(numberOfClaimers1  < 1) name = TheTerminator.createCustomCreep(energy,  'claimer', 0, home);
-	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home);
-	else if(numberOfRemoteBuilders2 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 2, home);
-	//else if(numberOfRemoteBuilders3 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 3, home);
+	else if(numberOfUpgraders < 2) name = TheTerminator.createCustomCreep(2000,  'upgrader', 0, home, undefined);
+	else if(numberOfRepairers < 1) name = TheTerminator.createCustomCreep(2000,  'repairer', 0, home, undefined);
+	else if(numberOfLongDistanceHarvesters3 < 2) name = TheTerminator.createCustomCreep(2600,  'long_distance_harvester', 3, home, undefined);
+	else if(numberOfLongDistanceHarvesters4 < 2) name = TheTerminator.createCustomCreep(2600,  'long_distance_harvester', 4, home, undefined);
+	//else if(numberOfRemoteRepairers2 < 1) name = TheTerminator.createCustomCreep(energy,  'repairer', 2, home, undefined);
+	//else if(numberOfClaimers1  < 1) name = TheTerminator.createCustomCreep(energy,  'claimer', 0, home, undefined);
+	else if(numberOfRemoteBuilders1 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 1, home, undefined);
+	//else if(numberOfRemoteBuilders2 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 2, home, undefined);
+	//else if(numberOfRemoteBuilders3 < 1) name = TheTerminator.createCustomCreep(energy,  'builder', 3, home, undefined);
 
-	//else if(numberOfAttackers  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute', home); }
-	//else if(numberOfAttackers2  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute2', home); }
+	//else if(numberOfAttackers  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute', home, undefined); }
+	//else if(numberOfAttackers2  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'brute2', home, undefined); }
 
-	//else if(numberOfHealers  < 4) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'healer', home); }
-	//else if(numberOfLongRange  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'long_range', home); }
+	//else if(numberOfHealers  < 4) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'healer', home, undefined); }
+	//else if(numberOfLongRange  < 1) { name = TheTerminator.createAttackerCreep(energyLong,  'attacker', 0, 'long_range', home, undefined); }
 
 	/*else if(numberOfWallRepairers < 0) name = TheTerminator.createCustomCreep(energy,  'wall_repairer', 0);
 	else if(numberOfUpgraders < 3) name = TheTerminator.createCustomCreep(energy,  'upgrader', 0);
@@ -282,20 +282,56 @@ function supportBaseEnergy(TheTerminator, home, newBase) {
 			var target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 			if (target != undefined) {
 				tower.attack(target);
+			} else {
+				var walls;
+				walls = tower.room.find(FIND_STRUCTURES, {
+					filter: (s) => s.structureType == STRUCTURE_WALL
+				});
+
+				var ramparts = tower.room.find(FIND_STRUCTURES, {
+					filter: (s) => s.structureType == STRUCTURE_RAMPART
+				});
+
+				var target = undefined;
+
+				for (let percentage = 0.000001; percentage <= 1; percentage = percentage + 0.00001) {
+					target = tower.pos.findClosestByPath(walls, {
+						filter: (w) => w.hits / w.hitsMax < percentage
+					});
+
+					if (target != undefined) {
+						break;
+					}
+				}
+				var targetRampart = tower.pos.findClosestByPath(ramparts, {
+					filter: (w) => w.hits < 2000
+				});
+				if(targetRampart != undefined && tower.energy > 400) {
+					tower.repair(targetRampart);
+				} if(target != undefined && tower.energy > 800) {
+					if(Game.time % 40 == 0) {
+						tower.repair(target);
+					} else {
+					}
+					
+				}
+			
 			}
 		}
 	}
 	var name = undefined;
 	var energy = TheTerminator.room.energyCapacityAvailable > 800 ? 800 : TheTerminator.room.energyCapacityAvailable; 
+	var totalEnergy = TheTerminator.room.energyCapacityAvailable; 
 	console.log(home);
-	console.log(numberOfUpgraders + " Number of upgraders");
+	console.log(numberOfHarvesters + " Number of upgraders WHAT");
 	if (!newBase) {
-		if(numberOfMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner', 1, home);
-		else if(numberOfMiners2 < 1) name = TheTerminator.createCustomCreep(energy,  'miner2', 1, home);
+		//if(numberOfMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner', 1, home, undefined);
+		//else if(numberOfMiners2 < 1) name = TheTerminator.createCustomCreep(energy,  'miner2', 1, home, undefined);
 	}
-	if(numberOfHarvesters < 1) { name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home);}
-	if(numberOfUpgraders < 4) { name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home);}
-	if(numberOfRepairers < 1) { name = TheTerminator.createCustomCreep(energy,  'repairer', 0, home);}
+	if(numberOfHarvesters < 3) { name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home, undefined);}
+	else if(numberOfUpgraders < 4) { name = TheTerminator.createCustomCreep(energy,  'upgrader', 0, home, undefined);}
+	else if(numberOfRepairers < 1) { name = TheTerminator.createCustomCreep(energy,  'repairer', 0, home, undefined);}
+	else if(numberOfLongDistanceHarvesters < 1) name = TheTerminator.createCustomCreep(totalEnergy,  'long_distance_harvester', 0, home, { target: 'E47S6'});
 	/*
 	var energyLong = TheTerminator.room.energyCapacityAvailable; 
 	if (!newBase) {
