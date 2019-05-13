@@ -1,11 +1,13 @@
 class CreepControl {
 	init(spawn, home, role, number, creepSoftware) {
+		console.log("Creep control initialising .....");
 		this.home = home;
 		this.spawn = spawn;
 		this.role = role;
 		this.number = number;
 		this.creeps = this.setUpCreeps();
 		this.creepSoftware = creepSoftware;
+		console.log("Initialisation complete");
 	}
 
 	run() {
@@ -37,7 +39,7 @@ class CreepControl {
 		var energy = this.spawn.room.energyCapacityAvailable > 800 ? 800 : TheTerminator.room.energyCapacityAvailable; 
 		var numberOfParts = Math.floor( energy / 200 );
 		var body = [];
-		for (let i = 0; i < 1; i++) {
+		for (let i = 0; i < numberOfParts; i++) {
 			body.push(WORK);
 		}
 		for (let i = 0; i < numberOfParts; i++) {
@@ -60,11 +62,11 @@ class CreepControl {
 		for(let name in Game.creeps) {
 			let creep = Game.creeps[name];
 			if(name !== undefined && creep.memory.role == this.role && creep.memory.home == this.home) {
+				console.log(name);
 				creeps.push(name);
 			}
 			
 		}
-		console.log(creeps);
 		return creeps;
 	}
 }

@@ -1,24 +1,20 @@
-const mineralHarvester = new MineralHarvester();
-mineralHarvester.init();
-
-
-module.exports = {
-	run: function (creep) {
-		mineralHarvester.run(creep);
-	}
-}
-
 class MineralHarvester {
 	init() {
 		this.upgrader = require('role.upgrader');
 	}
 	run(creep) {
+		if (this.ticksToLive < 50 && _.sum(creep.carry) == 0) {
+			let spawn = Game.spawns.TheTerminator;
+			if (spawn.recycleCreep(creep) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(spawn, {reusePath: moveReusePath()});
+			}
+		}
 		var containers = creep.room.find(FIND_STRUCTURES, {
 			filter: (structure) =>
-			        (structure.structureType === STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_KEANIUM] > 0) 
+			        (structure.structureType === STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_UTRIUM] > 0) 
 			});
 		var source = creep.pos.findClosestByPath(containers);
-		if((!source || creep.carry.energy > 0) && !(creep.carry.energy === 0 && _.sum(creep.carry) > 0)){
+		if(creep.carry.energy !== 0) {
 			this.upgrader.run(creep);
 			return;
 		}
@@ -32,12 +28,11 @@ class MineralHarvester {
 		}	
 
 		if(creep.memory.working == true) {
-		    //console.log("WORKING");
 			var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
 				filter: (s) => s.structureType === STRUCTURE_TERMINAL
 			});
 			if (structure != undefined) {
-				if(creep.transfer(structure, RESOURCE_KEANIUM) === ERR_NOT_IN_RANGE) {
+				if(creep.transfer(structure, RESOURCE_UTRIUM) === ERR_NOT_IN_RANGE) {
 					creep.moveTo(structure);
 				}
 			} else {
@@ -45,7 +40,7 @@ class MineralHarvester {
 					filter: (s) => s.structureType === STRUCTURE_STORAGE
 				});
 				if (structure != undefined) {
-					if(creep.transfer(structure, RESOURCE_KEANIUM) == ERR_NOT_IN_RANGE) {
+					if(creep.transfer(structure, RESOURCE_UTRIUM) == ERR_NOT_IN_RANGE) {
 						creep.moveTo(structure);
 					}
 				}
@@ -53,12 +48,8 @@ class MineralHarvester {
 		}
 		else {
 
-		     	var containers = creep.room.find(FIND_STRUCTURES, {
-		        filter: (structure) =>
-			        (structure.structureType === STRUCTURE_CONTAINER)  && (structure.store[RESOURCE_KEANIUM] > 0) 
-			});
-			var source = creep.pos.findClosestByPath(containers);
-			if(creep.withdraw(source, RESOURCE_KEANIUM) == ERR_NOT_IN_RANGE) {
+			var source = creep.pos.findClosestByPath(FIND_MINERALS);
+			if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
 				creep.moveTo(source);
 			}
 			if(!source){
@@ -66,5 +57,14 @@ class MineralHarvester {
 			}
 		}
 
+	}
+}
+
+const mineralHarvester = new MineralHarvester();
+mineralHarvester.init();
+
+module.exports = {
+	run: function (creep) {
+		mineralHarvester.run(creep);
 	}
 }
