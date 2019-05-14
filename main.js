@@ -20,8 +20,7 @@ var CreepControl = require('creepControlHandler');
 
 
 
-const _mineralHarvester = new CreepControl();
-_mineralHarvester.init(Game.spawns.TheTerminator, 'E48S6', 'mineral-harvester', 1, mineralHarvesterClass);
+const _mineralHarvester = new CreepControl(Game.spawns.TheTerminator, 'E48S6', 'mineral-harvester', 1, mineralHarvesterClass);
 
 module.exports.loop = function () {
 	_mineralHarvester.run();

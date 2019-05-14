@@ -1,12 +1,14 @@
 class CreepControl {
-	init(spawn, home, role, number, creepSoftware) {
+	constructor(spawn, home, role, number, creepSoftware, body) {
 		console.log("Creep control initialising .....");
 		this.home = home;
 		this.spawn = spawn;
 		this.role = role;
 		this.number = number;
-		this.creeps = this.setUpCreeps();
+		this.creeps = this.setUpCreeps((name) => { console.log(name); return name; } );
 		this.creepSoftware = creepSoftware;
+		this.body = body;
+		this.memory = {};
 		console.log("Initialisation complete");
 	}
 
@@ -39,31 +41,34 @@ class CreepControl {
 		var energy = this.spawn.room.energyCapacityAvailable > 800 ? 800 : TheTerminator.room.energyCapacityAvailable; 
 		var numberOfParts = Math.floor( energy / 200 );
 		var body = [];
-		for (let i = 0; i < numberOfParts; i++) {
-			body.push(WORK);
-		}
-		for (let i = 0; i < numberOfParts; i++) {
-			body.push(CARRY);
-		}
-		for (let i = 0; i < numberOfParts; i++) {
-			body.push(MOVE);
+		if(this.body === undefined || this.body === []) {
+			for (let i = 0; i < numberOfParts; i++) {
+				body.push(WORK);
+			}
+			for (let i = 0; i < numberOfParts; i++) {
+				body.push(CARRY);
+			}
+			for (let i = 0; i < numberOfParts; i++) {
+				body.push(MOVE);
+			}
+		} else {
+			body = this.body;
 		}
 
 		var creepName = this.role + Game.time;
-		var creepResult = this.spawn.spawnCreep(body, creepName, { memory: {role: this.role, working: false , sId: 0 , home: this.home, memory: {}}});
+		var creepResult = this.spawn.spawnCreep(body, creepName, { memory: {role: this.role, working: false , sId: 0 , home: this.home, memory: this.memory}});
 		if(creepResult === OK) {
 			this.creeps.push(creepName);
 			console.log("NEW CREEP SPAWNED");
 		}
 	}
 
-	setUpCreeps() {
+	setUpCreeps(operation) {
 		let creeps = [];
 		for(let name in Game.creeps) {
 			let creep = Game.creeps[name];
 			if(name !== undefined && creep.memory.role == this.role && creep.memory.home == this.home) {
-				console.log(name);
-				creeps.push(name);
+				creeps.push(operation(name));
 			}
 			
 		}
