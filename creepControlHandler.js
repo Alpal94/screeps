@@ -1,5 +1,9 @@
 class CreepControl {
 	constructor(spawn, home, role, number, creepSoftware, body) {
+		this.init(spawn, home, role, number, creepSoftware, body);
+	}
+
+	init(spawn, home, role, number, creepSoftware, body) {
 		console.log("Creep control initialising .....");
 		this.home = home;
 		this.spawn = spawn;
@@ -10,6 +14,7 @@ class CreepControl {
 		this.body = body;
 		this.memory = {};
 		console.log("Initialisation complete");
+
 	}
 
 	run() {
