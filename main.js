@@ -13,6 +13,7 @@ var roleAttacker = require('role.attacker');
 var roleMineralHarvester = require('role.mineralTransport');
 
 var mineralHarvesterClass = require('role.mineralHarvester');
+var Scout = require('class.scouts');
 
 var CreepControl = require('creepControlHandler');
 
@@ -22,13 +23,16 @@ var CreepControl = require('creepControlHandler');
 
 const _mineralHarvester = new CreepControl(Game.spawns.TheTerminator, 'E48S6', 'mineral-harvester', 1, mineralHarvesterClass);
 
+
+const _scout = new Scout(Game.spawns.Terminator, 'E48S7', 'scout', 1);
+
 module.exports.loop = function () {
 	_mineralHarvester.run();
+	_scout.run();
 
 
 	mainFunction(Game.spawns.Terminator, Game.spawns.TerminatorT850, 'E48S7', false);
 	if(Game.spawns.TheTerminator) supportBaseEnergy(Game.spawns.TheTerminator, 'E48S6', true);
-	//attack.greet();
 
 };
 

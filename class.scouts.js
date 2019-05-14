@@ -1,10 +1,12 @@
 var CreepControl = require('creepControlHandler');
-var Scout = require('sub.scout.js');
+var Scout = require('sub.scout');
 
 class Scouts extends CreepControl {
-	scoutSetup() {
+	constructor(spawn, home, role, number, creepSoftware, body) {
+		super();
+		this.init(spawn, home, role, number, creepSoftware, body);
 		this.body = this.scoutBody();
-		this.scouts = setUpCreeps((name) => {
+		this.scouts = this.setUpCreeps((name) => {
 			const _scout = new Scout(name);
 			return _scout;
 		});
