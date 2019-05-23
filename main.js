@@ -21,14 +21,18 @@ var CreepControl = require('creepControlHandler');
 
 
 
-const _mineralHarvester = new CreepControl(Game.spawns.TheTerminator, 'E48S6', 'mineral-harvester', 1, mineralHarvesterClass);
+//const _mineralHarvester = new CreepControl(Game.spawns.TheTerminator, 'E48S6', 'mineral-harvester', 1, mineralHarvesterClass);
 
 
-const _scout = new Scout(Game.spawns.Terminator, 'E48S7', 'scout', 1);
+//const _scout = new Scout(Game.spawns.TerminatorT850, 'E48S7', 'scout', 4);
 
 module.exports.loop = function () {
-	_mineralHarvester.run();
-	_scout.run();
+	try {
+		//_mineralHarvester.run();
+		//_scout.run();
+	} catch(err) {
+		//console.log(err);
+	}
 
 
 	mainFunction(Game.spawns.Terminator, Game.spawns.TerminatorT850, 'E48S7', false);
@@ -130,14 +134,14 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 			if (target != undefined) {
 				tower.attack(target);
 			} else {
-				var walls;
+				/*var walls;
 				if(towerNumber === 1) {
 					walls = tower.room.find(FIND_STRUCTURES, {
 						filter: (s) => s.structureType == STRUCTURE_RAMPART
 					});
 				} else {
 					walls = tower.room.find(FIND_STRUCTURES, {
-						filter: (s) => s.structureType == STRUCTURE_RAMPART //|| s.structureType == STRUCTURE_WALL
+						filter: (s) => s.structureType == STRUCTURE_RAMPART 
 					});
 				}
 				var ramparts = tower.room.find(FIND_STRUCTURES, {
@@ -166,11 +170,12 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 					} else {
 					}
 					
-				}
+				}*/
 			
 			}
 		}
 	}
+
 	var name = undefined;
 
 	var energy = TheTerminator.room.energyCapacityAvailable > 800 ? 800 : TheTerminator.room.energyCapacityAvailable; 
@@ -184,7 +189,7 @@ function mainFunction(TheTerminator, TheTerminator2,  home, newBase) {
 		else if(numberOfResourceMiners < 1) name = TheTerminator.createCustomCreep(energy,  'miner_resources', 0, home, undefined);
 		else if(numberOfMineralHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'mineral_harvester', 0, home, undefined);
 	}
-
+	//console.log(numberOfBuilders);
 	if(numberOfHarvesters < 3) name = TheTerminator.createCustomCreep(energy,  'harvester', 0, home, undefined);
 	if(numberOfTowerHarvesters < 1) name = TheTerminator.createCustomCreep(energy,  'harvester', 1, home, undefined);
 	else if(numberOfBuilders < 1) name = TheTerminator.createCustomCreep(2000,  'builder', 0, home, undefined);

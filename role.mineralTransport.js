@@ -32,7 +32,7 @@ module.exports = {
 				var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
 					filter: (s) => s.structureType === STRUCTURE_STORAGE
 				});
-				console.log(structure);
+				//console.log(structure);
 				if (structure != undefined) {
 					if(creep.transfer(structure, RESOURCE_KEANIUM) == ERR_NOT_IN_RANGE) {
 						creep.moveTo(structure);
